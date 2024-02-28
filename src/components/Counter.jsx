@@ -8,16 +8,20 @@ const Counter = () => {
   const count = useSelector((state) => state.counter.value);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  // const counterOperation = useCallback(
-  //   (type, payload) => {
-  //     dispatch({ type, payload });
-  //   },
-  //   [dispatch]
-  // );
+  const handleCounter = useCallback(
+    (type, payload) => {
+      if (type === "increase") {
+        dispatch(increase(payload));
+      } else {
+        dispatch(decrease(payload));
+      }
+    },
+    [dispatch]
+  );
 
-  // useEffect(() => {
-  //   counterOperation("increase", 10);
-  // }, [counterOperation]);
+  useEffect(() => {
+    handleCounter("increase", 10);
+  }, [handleCounter]);
 
   const handleCounterValue = (value) => {
     if (value < 0) {
@@ -25,10 +29,6 @@ const Counter = () => {
     }
     return value;
   };
-
-  // const toggleCounter = () => {
-  //   dispatch({ type: "toggleCounter" });
-  // };
 
   return (
     <div className="box">
@@ -41,7 +41,7 @@ const Counter = () => {
           <div>
             <button
               onClick={() => {
-                dispatch(increase(5));
+                handleCounter("increase", 5);
               }}
             >
               increase +
@@ -49,7 +49,7 @@ const Counter = () => {
 
             <button
               onClick={() => {
-                dispatch(decrease(2));
+                handleCounter("decrease", 2);
               }}
             >
               decrease -
