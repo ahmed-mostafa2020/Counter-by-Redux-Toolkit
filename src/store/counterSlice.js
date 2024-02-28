@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toggleAuth } from "./authSlice";
 
 const initState = { value: 0 };
 
@@ -12,6 +13,14 @@ const counterSlice = createSlice({
     decrease: (state, action) => {
       state.value -= action.payload;
     },
+  },
+
+  // Add lister in this reducer on another reducer
+
+  extraReducers: (builder) => {
+    builder.addCase(toggleAuth, (state) => {
+      state.value = 0;
+    });
   },
 });
 
